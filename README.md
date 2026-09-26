@@ -70,6 +70,43 @@ $cbr attach-agent $udp
 $cbr set type_ CBR
 $cbr set packet_size_ 1000
 $cbr set rate_ 0.05Mb
+$cbr set random_ false #scheduling the events
+$ns at 0.0 "$n0 label TCP_Traffic"
+$ns at 0.0 "$n1 label UDP_Traffic"
+$ns at 0.3 "$cbr start"
+$ns at 0.8 "$ftp start"
+$nsat 7.0 "$ftp stop"
+$ns at 7.5 "$cbr stop"
+$ns at 8.0 "finish"
+$ns run
+$ns simplex-link-op $n3 $n2 orient left #setup TCP connection
+set tcp [new Agent/TCP/Newreno]
+$nsattach-agent $n0 $tcp
+set sink [newAgent/TCPSink/DelAck]
+$ns attach- agent $n4 $sink
+$ns connect $tcp $sink
+$tcp set fid_ 1
+$tcp set packet_size_ 552 #set ftp over tcp connection set ftp [new Application/FTP]
+$ftp attach-agent $tcp #setup a UDP connection set udp [new Agent/UDP]
+$ns attach-agent $n1 $udp set null [new Agent/Null]
+$ns attach-agent
+$n5 $null
+$ns connect $udp $null
+$udp set fid_ 2
+#setup a CBR over UDP connection setcbr [new Application/Traffic/CBR]
+$cbr attach-agent $udp
+$cbr set type_ CBR
+$cbr set packet_size_ 1000
+$cbr set rate_ 0.05Mb
+$cbr set random_ false #scheduling the events
+$ns at 0.0 "$n0 label TCP_Traffic"
+$ns at 0.0 "$n1 label UDP_Traffic"
+$ns at 0.3 "$cbr start"
+$ns at 0.8 "$ftp start"
+$nsat 7.0 "$ftp stop"
+$ns at 7.5 "$cbr stop"
+$ns at 8.0 "finish"
+$ns run
 
  
 
