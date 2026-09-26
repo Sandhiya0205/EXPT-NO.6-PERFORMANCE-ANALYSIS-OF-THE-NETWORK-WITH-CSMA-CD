@@ -70,15 +70,7 @@ $cbr attach-agent $udp
 $cbr set type_ CBR
 $cbr set packet_size_ 1000
 $cbr set rate_ 0.05Mb
-$cbr set random_ false #scheduling the events
-$ns at 0.0 "$n0 label TCP_Traffic"
-$ns at 0.0 "$n1 label UDP_Traffic"
-$ns at 0.3 "$cbr start"
-$ns at 0.8 "$ftp start"
-$nsat 7.0 "$ftp stop"
-$ns at 7.5 "$cbr stop"
-$ns at 8.0 "finish"
-$ns run
+
  
 
 
