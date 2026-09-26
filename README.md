@@ -80,6 +80,13 @@ $ns at 7.5 "$cbr stop"
 $ns at 8.0 "finish"
 $ns run
  
+
+
+
+
+
+
+
 # OUTPUT
 
 
